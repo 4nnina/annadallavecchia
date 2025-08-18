@@ -1,0 +1,126 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    color: #2C2C2C;
+    background-color: #F9F7F3;
+}
+
+header {
+    background-color: #3A5A40; /* petrolio-verde */
+    color: #F9F7F3;
+    padding: 2rem;
+    text-align: center;
+}
+
+header img {
+    width: 200px;   /* più piccola */
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%; /* cerchio */
+    border: 3px solid #DAD7CD; /* bordo verde chiaro */
+    margin-bottom: 1rem;
+}
+
+nav {
+    margin-top: 1rem;
+}
+
+nav a {
+    color: #F9F7F3;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: #DAD7CD; /* verde chiaro pastello */
+}
+
+section {
+    padding: 3rem 10%;
+}
+
+h2 {
+    color: #3A5A40;
+    margin-bottom: 1rem;
+    border-left: 4px solid #A98467; /* marrone autunnale */
+    padding-left: 0.5rem;
+}
+
+a {
+    color: #588157; /* verde oliva */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    background-color: #344E41;
+    color: #F9F7F3;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.cv-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+
+.cv-item {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* sinistra: date, destra: contenuto */
+    gap: 1em;
+}
+
+.cv-date {
+    font-weight: bold;
+    color: #555;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.cv-details {
+    line-height: 1.5;
+}
+
+.cv-details ul {
+    margin: 0.5em 0 0 1em;
+    padding: 0;
+}
+
+
+
+#contacts h2 {
+  font-size: 1.8em;       /* titolo più grande */
+  margin-bottom: 15px;
+}
+
+#contacts p {
+  margin: 10px 0;
+}
+
+#contacts a i {
+  font-size: 28px;        /* dimensione icona */
+  margin-right: 6px;
+  vertical-align: middle;
+  transition: transform 0.2s, color 0.2s;
+}
+
+#contacts a:hover i {
+  transform: scale(1.3);  /* effetto zoom al passaggio */
+  color: #0077b5;         /* esempio: cambia colore su hover */
+}
+
+header nav a:hover {
+  color: #FFD700; /* dorato al passaggio del mouse */
+}
+
+.highlight {
+  color: #ff6600; /* colore per far risaltare i nomi o luoghi */
+  font-weight: 500;
+}

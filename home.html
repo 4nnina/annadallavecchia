@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Anna Dalla Vecchia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font & Style -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <img src="assets/profile.jpg" alt="Anna Dalla Vecchia">
+    <h1>Anna Dalla Vecchia</h1>
+    <p>University of Verona · Italy</p>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#publications">Publications</a>
+      <a href="#cv">CV</a>
+      <a href="#contacts">Contacts</a>
+    </nav>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About</h2>
+    <p>
+      I am a second-year PhD student in Computer Science at the <strong>University of Verona</strong> advised, by Prof. <strong>Elisa Quintarelli</strong> and <strong>Sara Migliorini</strong>. 
+      Recently, I’ve also been a visiting researcher at <strong>Tampere University</strong>, under the supervision of Prof. <strong>Kostas Stefanidis</strong>.
+      My research focuses on recommender systems, context-based personalization, and fairness.
+    </p>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <h2>Publications</h2>
+    <ul id="biblist"></ul>
+  </section>
+
+  <script>
+    fetch('assets/biblio.json') // carica il JSON generato dal Python
+      .then(res => res.json())
+      .then(entries => {
+        const list = document.getElementById('biblist');
+        const myName = "Anna Dalla Vecchia";
+
+        entries.sort((a, b) => parseInt(b.year || 0) - parseInt(a.year || 0));
+
+        entries.forEach(e => {
+          // Gli autori sono già una lista di "Nome Cognome"
+          const authorsList = e.authors || [];
+          const authorsFormatted = authorsList.map(a => 
+            a === myName ? `<strong>${a}</strong>` : a
+          ).join(', ');
+          const title = e.title || '';
+          const year = e.year || '';
+          const doi = e.doi ? `<a href="https://doi.org/${e.doi}" target="_blank">[DOI]</a>` : e.url ? `<a href="${e.url}" target="_blank">[link]</a>`: '' ;
+          const bestPaperBadge = e.bestPaper ? ' <span class="best-paper"><strong>🏆 Best Paper </strong></span>' : '';
+
+          const li = document.createElement('li');
+          li.innerHTML = `${authorsFormatted} <br><em>"${title}"</em> (${year}) ${doi}.${bestPaperBadge}`;
+          list.appendChild(li);
+        });
+      })
+      .catch(err => console.error('Errore caricamento JSON:', err));
+  </script>
+
+
+  <!-- CV -->
+  <section id="cv">
+    <h2>Curriculum Vitae</h2>
+
+    <h3>Education</h3>
+    <div class="cv-section">
+      <div class="cv-item">
+        <div class="cv-date">Oct 2023 – present</div>
+        <div class="cv-details">
+          <strong>PhD in Computer Science</strong> – Verona, Italy<br>
+          University of Verona - Department of Computer Science<br>
+          <em>Title</em>: Context-Aware Recommender Systems: Challenges in Personalization and Fairness
+        </div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-date">Oct 2021 – Jul 2023</div>
+        <div class="cv-details">
+          <strong>MSc in Computer Science and Engineering</strong> – Verona, Italy<br>
+          University of Verona - Department of Computer Science<br>
+          <em>Title</em>: The Synergies of Context and Data Aging in Recommendations: Issues and Solutions<br>
+          110/110 with honors
+        </div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-date">Oct 2018 – Jul 2021</div>
+        <div class="cv-details">
+          <strong>BSc in Computer Science</strong> – Verona, Italy<br>
+          University of Verona - Department of Computer Science<br>
+          <em>Title</em>: Taint Analysis: tracking sensitive information through static analysis of Cobol code<br>
+          110/110 with honors
+        </div>
+      </div>
+    </div>
+
+    <h3>Experience</h3>
+  <div class="cv-section">
+    <div class="cv-item">
+      <div class="cv-date">Feb 2025 – Jun 2025</div>
+      <div class="cv-details">
+        <strong>Visiting Researcher</strong> – Tampere, Finland<br>
+        Tampere University - Faculty of Information Technology and Communication Sciences  
+      </div>
+    </div>
+
+    <div class="cv-item">
+      <div class="cv-date">May 2023 – Jun 2023</div>
+      <div class="cv-details">
+        <strong>Occasional self-employment</strong> – Verona, Italy<br>
+        University of Verona - Department of Computer Science  
+      </div>
+    </div>
+
+    <div class="cv-item">
+      <div class="cv-date">Oct 2021 – Jul 2022</div>
+      <div class="cv-details">
+        <strong>Research Fellowship</strong> – Verona, Italy<br>
+        University of Verona - Department of Computer Science  
+      </div>
+    </div>
+
+    <div class="cv-item">
+      <div class="cv-date">Oct 2022 – Present</div>
+      <div class="cv-details">
+        <strong>Teaching Assistant</strong> – Verona, Italy<br>
+        University of Verona - Department of Computer Science  
+      </div>
+    </div>
+
+    
+
+  </div>
+
+  <p>📄 For the details download full CV <a href="assets/CV_DallaVecchia_en.pdf" target="_blank"> (PDF)</a>.</p>
+</section>
+
+  <!-- CONTACTS -->
+  <section id="contacts">
+    <h2>Contacts</h2>
+    <p>
+      <a href="mailto:anna.dallavecchia@univr.it" target="_blank">
+        <i class="fas fa-envelope"></i> Email
+      </a> · 
+      <a href="https://scholar.google.com/citations?user=7v3fqEEAAAAJ&hl=it&oi=ao" target="_blank"><i class="fas fa-graduation-cap"></i> Google Scholar
+      </a> · 
+      <a href="https://orcid.org/0000-0001-7026-5205" target="_blank"><i class="fab fa-orcid"></i> ORCID
+      </a> · 
+      <a href="https://dblp.org/pid/327/9854.html" target="_blank">
+        <i class="fas fa-database"></i> DBLP
+      </a> · 
+      <a href="https://it.linkedin.com/in/anna-dalla-vecchia-3736ba1b4" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn
+      </a> · 
+      <a href="https://github.com/4nnina" target="_blank">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 · Anna Dalla Vecchia
+  </footer>
+
+</body>
+</html>
