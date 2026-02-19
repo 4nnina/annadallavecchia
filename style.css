@@ -247,11 +247,12 @@ a:hover {
 
 .project-card {
   background: linear-gradient(135deg, rgba(123, 168, 153, 0.15) 0%, rgba(212, 165, 165, 0.08) 100%);
-  padding: 2rem;
+  padding: 0;
   border-radius: 20px;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
   transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .project-card:hover {
@@ -260,17 +261,27 @@ a:hover {
   border-color: var(--secondary);
 }
 
+.project-card > *:not(.project-image) {
+  padding: 0 2rem;
+}
+
 .project-card h3 {
-  margin-top: 0;
+  padding-top: 2rem;
+  margin: 0;
+}
+
+.project-card > :last-child {
+  padding-bottom: 2rem;
 }
 
 .project-image {
+  padding: 0;
   width: 100%;
-  height: 160px;
+  height: 40%;
   overflow: hidden;
-  border-radius: 20px 20px 0 0;
+  border-radius: 0;
   background: rgba(240, 240, 240, 0.3);
-  margin-bottom: 1.5rem;
+  margin: 0;
 }
 
 .project-image img {
@@ -517,6 +528,6 @@ footer {
   }
 
   .project-image {
-    height: 140px;
+    height: 100px;
   }
 }
