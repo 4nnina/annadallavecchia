@@ -17,9 +17,12 @@
   <header>
     <img src="assets/profile.jpg" alt="Anna Dalla Vecchia">
     <h1>Anna Dalla Vecchia</h1>
-    <p>University of Verona · Italy</p>
+    <!--<p>University of Verona · Italy</p>-->
     <nav>
       <a href="#about">About</a>
+      <a href="#interests">Research</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
       <a href="#publications">Publications</a>
       <a href="#cv">CV</a>
       <a href="#contacts">Contacts</a>
@@ -30,44 +33,278 @@
   <section id="about">
     <h2>About</h2>
     <p>
-      I am a second-year PhD student in Computer Science at the <strong>University of Verona</strong> advised, by Prof. <strong>Elisa Quintarelli</strong> and <strong>Sara Migliorini</strong>. 
+      <!-- I am a second-year PhD student in Computer Science at the <strong>University of Verona</strong> advised by Prof. <strong>Elisa Quintarelli</strong> and <strong>Sara Migliorini</strong>. 
       Recently, I’ve also been a visiting researcher at <strong>Tampere University</strong>, under the supervision of Prof. <strong>Kostas Stefanidis</strong>.
-      My research focuses on recommender systems, context-based personalization, and fairness.
+      My research focuses on recommender systems, context-based personalization, and fairness.-->
+
+      I design and evaluate data-driven systems for <strong>personalization</strong> and <strong>decision support</strong>, with a focus on <strong>recommender systems</strong> and <strong>contextual modeling</strong>.
+      <br>
+      I am currently completing a PhD in Computer Science at the <strong>University of Verona</strong> advised by Prof. <strong>Elisa Quintarelli</strong> and <strong>Sara Migliorini</strong>. 
+      During my doctoral studies, I have also spent time as a visiting researcher at  <strong>Tampere University</strong> (Finland), working on fairness and bias in recommender systems, under the supervision of Prof. <strong>Kostas Stefanidis</strong>.
+
     </p>
   </section>
+  <!-- RESEARCH INTERESTS -->
+  <section id="interests">
+    <h2>Research Interests</h2>
+    <div class="tags">
+      <span class="tag">Recommender Systems</span>
+      <span class="tag">Context-Aware Personalization</span>
+      <span class="tag">Fairness</span>
+      <span class="tag">Machine Learning</span>
+      <span class="tag">Deep Learning</span>
+      <span class="tag">Data Mining</span>
+      <span class="tag">User Behavior Analysis</span>
+    </div>
+  </section>
 
+  <!-- SKILLS -->
+  <section id="skills">
+    <h2>Skills & Expertise</h2>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <h3>Programming</h3>
+        <p>Python, Java, SQL</p>
+      </div>
+      <div class="skill-category">
+        <h3>Frameworks & Tools</h3>
+        <p>TensorFlow, PyTorch, Pandas, Scikit-learn, Jupyter</p>
+      </div>
+      <div class="skill-category">
+        <h3>Methodologies</h3>
+        <p>Statistical Analysis, Machine Learning, Deep Learning, Time Series, Classification</p>
+      </div>
+      <div class="skill-category">
+        <h3>Areas of Expertise</h3>
+        <p>Spatio-Temporal Data, Sequential Pattern Mining, Fairness Evaluation</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <h2>GitHub Projects</h2>
+    <div class="projects-grid">
+      <article class="project-card skill-category">
+        <h3>EFaST</h3>
+        <p>
+          Web interface that explains sequential task assignment for multiple stakeholders,
+          focusing on fairness and transparent decision support.
+        </p>
+        <div class="project-links">
+          <a href="https://github.com/4nnina/EFaST" target="_blank">Repository</a>
+          <a href="https://github.com/4nnina/fair_seq_task_assignment" target="_blank">Core Model</a>
+        </div>
+      </article>
+
+      <article class="project-card skill-category">
+        <h3>ACTER Framework</h3>
+        <p>
+          Context-aware recommender system for wearable device activities, built on real-world data.
+        </p>
+        <div class="project-links">
+          <a href="https://github.com/4nnina/ACTER_framework" target="_blank">Repository</a>
+        </div>
+      </article>
+
+      <article class="project-card skill-category">
+        <h3>Tourism Forecasting & Recommendation</h3>
+        <p>
+          Forecasting POI occupation, next-POI prediction, and tourism data visualization.
+        </p>
+        <div class="project-links">
+          <a href="https://github.com/smigliorini/crowd-forecaster" target="_blank">Crowd Forecaster</a>
+          <a href="https://github.com/smigliorini/itinerary-drl" target="_blank">Itinerary DRL</a>
+          <a href="https://github.com/4nnina/tourism_webApp" target="_blank">Tourism Web App</a>
+        </div>
+      </article>
+    </div>
+  </section>
   <!-- PUBLICATIONS -->
   <section id="publications">
     <h2>Publications</h2>
-    <ul id="biblist"></ul>
+
+    <h3>Journal Articles</h3>
+    <ol id="biblist-journal"></ol>
+
+    <h3>International Conferences</h3>
+    <ol id="biblist-conference"></ol>
+
+    <h3>National Conferences</h3>
+    <ol id="biblist-natconference"></ol>
+
+    <h3>Workshops</h3>
+    <ol id="biblist-workshop"></ol>
+
+    <h3>Book Chapters</h3>
+    <ol id="biblist-bookchapter"></ol>
   </section>
 
   <script>
-    fetch('assets/biblio.json') // carica il JSON generato dal Python
-      .then(res => res.json())
-      .then(entries => {
-        const list = document.getElementById('biblist');
+    fetch('assets/biblio.bib')
+      .then(res => res.text())
+      .then(bibContent => {
         const myName = "Anna Dalla Vecchia";
 
-        entries.sort((a, b) => parseInt(b.year || 0) - parseInt(a.year || 0));
+        // Better BibTeX parser
+        const entries = [];
+        
+        // Split by @ to get individual entries
+        const entryStrings = bibContent.split(/\n@/).filter(s => s.trim());
+        
+        entryStrings.forEach(entryStr => {
+          // Add @ back if not at start
+          if (!entryStr.startsWith('@')) entryStr = '@' + entryStr;
+          
+          const fields = {};
+          
+          // Extract all field=value pairs, handling nested braces
+          const fieldPattern = /(\w+)\s*=\s*({[^{}]*(?:{[^{}]*}[^{}]*)*}|"[^"]*")/g;
+          let match;
+          
+          while ((match = fieldPattern.exec(entryStr)) !== null) {
+            const fieldName = match[1].toLowerCase();
+            let fieldValue = match[2].trim();
+            
+            // Remove outer braces or quotes
+            if ((fieldValue.startsWith('{') && fieldValue.endsWith('}')) ||
+                (fieldValue.startsWith('"') && fieldValue.endsWith('"'))) {
+              fieldValue = fieldValue.slice(1, -1);
+            }
+            
+            // Clean up LaTeX and special characters
+            fieldValue = fieldValue
+              .replace(/\\'/g, '')
+              .replace(/\\\`\{?\w\}?/g, '')
+              .replace(/[{}]/g, '')
+              .replace(/\\/g, '')
+              .replace(/\s+/g, ' ')
+              .trim();
+            
+            fields[fieldName] = fieldValue;
+          }
+          
+          // Parse authors
+          const parseAuthors = (str) => {
+            if (!str) return [];
+            const authors = str.split(/\s+and\s+/i);
+            return authors.map(a => {
+              a = a.trim();
+              if (a.includes(',')) {
+                const parts = a.split(',').map(p => p.trim());
+                return `${parts[1]} ${parts[0]}`;
+              }
+              return a;
+            }).filter(a => a.length > 0);
+          };
 
-        entries.forEach(e => {
-          // Gli autori sono già una lista di "Nome Cognome"
-          const authorsList = e.authors || [];
-          const authorsFormatted = authorsList.map(a => 
-            a === myName ? `<strong>${a}</strong>` : a
-          ).join(', ');
-          const title = e.title || '';
-          const year = e.year || '';
-          const doi = e.doi ? `<a href="https://doi.org/${e.doi}" target="_blank">[DOI]</a>` : e.url ? `<a href="${e.url}" target="_blank">[link]</a>`: '' ;
-          const bestPaperBadge = e.bestPaper ? ' <span class="best-paper"><strong>🏆 Best Paper </strong></span>' : '';
-
-          const li = document.createElement('li');
-          li.innerHTML = `${authorsFormatted} <br><em>"${title}"</em> (${year}) ${doi}.${bestPaperBadge}`;
-          list.appendChild(li);
+          // Parse keywords to extract categories
+          const parseKeywords = (str) => {
+            if (!str) return [];
+            return str.split(',').map(k => k.trim().toLowerCase()).filter(k => k.length > 0);
+          };
+          
+          if (fields.title) {
+            entries.push({
+              entryType: entryStr.split('{')[0].replace('@', '').trim().toLowerCase(),
+              authors: parseAuthors(fields.author || ''),
+              title: fields.title,
+              journal: fields.journal || '',
+              booktitle: fields.booktitle || '',
+              booktitle_alt: fields.booktitle || '',
+              series: fields.series || '',
+              volume: fields.volume || '',
+              number: fields.number || '',
+              pages: fields.pages || '',
+              year: fields.year || '',
+              publisher: fields.publisher || '',
+              doi: fields.doi || '',
+              url: fields.url || '',
+              bestPaper: (fields.bestpaper || '').toLowerCase() === 'true',
+              keywords: parseKeywords(fields.keywords || '')
+            });
+          }
         });
+
+        // Format entry in MLA style
+        const formatMLA = (entry) => {
+          // Format authors
+          const authorList = entry.authors;
+          let authorsStr = '';
+          if (authorList.length === 0) {
+            authorsStr = 'Unknown.';
+          } else {
+            const formattedAuthors = authorList.map(a => 
+              a === myName ? `<strong>${a}</strong>` : a
+            );
+            authorsStr = formattedAuthors.join(', ') + '.';
+          }
+
+          const title = `"${entry.title}"`;
+          
+          let mlaString = authorsStr + ' ' + title + '.';
+
+          // Add container (journal or booktitle)
+          if (entry.journal) {
+            mlaString += ` <em>${entry.journal}</em>, vol. ${entry.volume}`;
+            if (entry.number) mlaString += `, no. ${entry.number}`;
+            mlaString += `, ${entry.year}, pp. ${entry.pages}.`;
+          } else if (entry.booktitle) {
+            mlaString += ` <em>${entry.booktitle}</em>,`;
+            if (entry.publisher) mlaString += ` ${entry.publisher},`;
+            mlaString += ` ${entry.year}, pp. ${entry.pages}.`;
+          } else {
+            mlaString += ` ${entry.year}.`;
+          }
+
+          // Add DOI or URL
+          if (entry.doi) {
+            const doiUrl = entry.doi.startsWith('http') ? entry.doi : `https://doi.org/${entry.doi}`;
+            const doiText = entry.doi.startsWith('http') ? entry.doi.replace('https://doi.org/', '') : entry.doi;
+            mlaString += ` <a href="${doiUrl}" target="_blank">doi: ${doiText}</a>.`;
+          } else if (entry.url) {
+            mlaString += ` <a href="${entry.url}" target="_blank">${entry.url}</a>.`;
+          }
+
+          return mlaString;
+        };
+
+        // Function to create list for each category
+        const createCategoryList = (category) => {
+          // Filter entries by category
+          const filtered = entries
+            .filter(e => e.keywords.includes(category))
+            .sort((a, b) => parseInt(b.year || 0) - parseInt(a.year || 0));
+
+          const list = document.getElementById(`biblist-${category}`);
+          if (!list) return;
+
+          filtered.forEach((e, index) => {
+            const li = document.createElement('li');
+            const numbering = filtered.length - index;
+            const mlaFormatted = formatMLA(e);
+            const bestPaperBadge = e.bestPaper ? '<strong> 🏆 Best Paper Award </strong>' : '';
+            
+            li.innerHTML = `[${numbering}] ${mlaFormatted}${bestPaperBadge}`;
+            list.appendChild(li);
+          });
+
+          // Hide section if no entries
+          if (filtered.length === 0) {
+            const section = list.closest('h3');
+            if (section) section.style.display = 'none';
+            list.closest('h3').nextElementSibling.style.display = 'none';
+          }
+        };
+
+        // Create lists for each category
+        createCategoryList('journal');
+        createCategoryList('conference');
+        createCategoryList('natconference');
+        createCategoryList('workshop');
+        createCategoryList('bookchapter');
       })
-      .catch(err => console.error('Errore caricamento JSON:', err));
+      .catch(err => console.error('Errore caricamento BibTeX:', err));
   </script>
 
 
@@ -138,9 +375,17 @@
         University of Verona - Department of Computer Science  
       </div>
     </div>
+  </div>
 
-    
-
+  <h3>Academic service</h3>
+  <div class="cv-section">
+    <div class="cv-item">
+      <div class="cv-date">2025</div>
+      <div class="cv-details">
+        <strong>Workshop Chair</strong> <br>
+        Fairness Exploration in Heterogeneous Data and Algorithms (FEHDA 2025), co-located with the 29th European Conference on Advances in Databases and Information Systems (ADBIS 2025)  
+      </div>
+    </div>
   </div>
 
   <p>📄 For the details download full CV <a href="assets/CV_DallaVecchia_en.pdf" target="_blank"> (PDF)</a>.</p>
@@ -148,20 +393,23 @@
 
   <!-- CONTACTS -->
   <section id="contacts">
-    <h2>Contacts</h2>
+    <h2>Get in Touch</h2>
     <p>
-      <a href="mailto:anna.dallavecchia@univr.it" target="_blank">
+      <a href="mailto:annadallave99@gmail.com" target="_blank">
         <i class="fas fa-envelope"></i> Email
-      </a> · 
-      <a href="https://scholar.google.com/citations?user=7v3fqEEAAAAJ&hl=it&oi=ao" target="_blank"><i class="fas fa-graduation-cap"></i> Google Scholar
-      </a> · 
-      <a href="https://orcid.org/0000-0001-7026-5205" target="_blank"><i class="fab fa-orcid"></i> ORCID
-      </a> · 
-      <a href="https://dblp.org/pid/327/9854.html" target="_blank">
+      </a>
+      <a href="https://scholar.google.com/citations?user=7v3fqEEAAAAJ&hl=it&oi=ao" target="_blank">
+        <i class="fas fa-graduation-cap"></i> Google Scholar
+      </a>
+      <a href="https://orcid.org/0000-0001-7026-5205" target="_blank">
+        <i class="fab fa-orcid"></i> ORCID
+      </a>
+      <!-- <a href="https://dblp.org/pid/327/9854.html" target="_blank">
         <i class="fas fa-database"></i> DBLP
-      </a> · 
-      <a href="https://it.linkedin.com/in/anna-dalla-vecchia-3736ba1b4" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn
-      </a> · 
+      </a>-->
+      <a href="https://it.linkedin.com/in/anna-dalla-vecchia-3736ba1b4" target="_blank">
+        <i class="fab fa-linkedin"></i> LinkedIn
+      </a>
       <a href="https://github.com/4nnina" target="_blank">
         <i class="fab fa-github"></i> GitHub
       </a>
@@ -170,7 +418,7 @@
 
   <!-- FOOTER -->
   <footer>
-    © 2025 · Anna Dalla Vecchia
+    © 2026 · Anna Dalla Vecchia
   </footer>
 
 </body>
